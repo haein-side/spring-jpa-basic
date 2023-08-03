@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,21 +27,18 @@ public class Main {
 
             em.persist(member);
 
-//            영속성 콘텍스트 지우고 쿼리 생성
-//            em.flush();
-//            em.clear();
-            
+            // DB에 데이터 반영하고 영속성 컨텍스트 지움
+            em.flush();
+            em.clear();
+
+            // em.find() 호출 시 영속성 컨텍스트에 없어서 db에서 조회 -> 조회 쿼리 볼 수 있음
             Member findMember = em.find(Member.class, member.getId());
+            List<Member> members = findMember.getTeam().getMembers();
 
-//            Long findTeamId = findMember.getTeamId();
-//            Team findTeam = em.find(Team.class, findTeamId);
-
-            Team findTeam = findMember.getTeam();
-            System.out.println("findTeam = " + findTeam.getName());
-
-            // 연관관계 수정
-//            Team newTeam = em.find(Team.class, 100L);
-//            findMember.setTeam(newTeam);
+            for (Member m : members) {
+                System.out.println("m = " + m.getName());
+                System.out.println("===========");
+            }
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
