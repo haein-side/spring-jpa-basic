@@ -38,4 +38,11 @@ public class Team {
     public void setMembers(List<Member> members) {
         this.members = members;
     }
+
+
+//    Team 입장에서 연관관계 편의 메소드 생성 시..
+//    public void addMember(Member member) {
+//        member.setTeam(this);
+//        members.add(member);
+//    }
 }

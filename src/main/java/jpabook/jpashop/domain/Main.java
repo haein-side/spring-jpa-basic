@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,15 +18,15 @@ public class Main {
             // 저장
             Team team = new Team();
             team.setName("TeamA");
-//            team.getMembers().add(member);
+//            team.getMembers().add(member); // Member.setTeam()하는 시점에 set되도록 연관관계 편의 메소드를 생성
             em.persist(team);
 
             Member member = new Member();
             member.setName("member1");
-            member.setTeam(team); // Member.team 연관관계 맵핑
+            member.changeTeam(team); // Member.team 연관관계 맵핑, 연관관계 편의 메소드
             em.persist(member);
 
-            team.getMembers().add(member); // JPA에서 안 읽긴 함
+            // team.addMember(member); // team 입장에서 연관관계 편의 메소드 생성
 
             // DB에 데이터 반영하고 영속성 컨텍스트 지움
             em.flush();
