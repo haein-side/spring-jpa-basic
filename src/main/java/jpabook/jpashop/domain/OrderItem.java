@@ -10,20 +10,13 @@ public class OrderItem {
     @Column(name = "ORDER_ITEM_ID")
     private Long id;
 
-//    @Column(name = "MEMBER_ID")
-//    private Long orderId;
-
     @ManyToOne
-    @JoinColumn(name = "ORDER_ID")
+    @JoinColumn(name = "ORDER_ID") // 연관관계의 주인 mappedBy = "order" : ORDER_ID와 매핑된 필드명이 order
     private Order order;
-
-//    @Column(name = "ITEM_ID")
-//    private Long itemId;
 
     @ManyToOne
     @JoinColumn(name = "ITEM_ID")
     private Item item;
-
 
     private LocalDateTime orderDate;
 

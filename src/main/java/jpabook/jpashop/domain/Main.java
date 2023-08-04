@@ -15,22 +15,15 @@ public class Main {
         tx.begin();
 
         try {
-            // 저장
-            Team team = new Team();
-            team.setName("TeamA");
-//            team.getMembers().add(member); // Member.setTeam()하는 시점에 set되도록 연관관계 편의 메소드를 생성
-            em.persist(team);
+            Order order = new Order();
+//            order.addOrderItem(new OrderItem());
+            em.persist(order);
 
-            Member member = new Member();
-            member.setName("member1");
-            member.changeTeam(team); // Member.team 연관관계 맵핑, 연관관계 편의 메소드
-            em.persist(member);
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
 
-            // team.addMember(member); // team 입장에서 연관관계 편의 메소드 생성
+            em.persist(orderItem);
 
-            // DB에 데이터 반영하고 영속성 컨텍스트 지움
-            em.flush();
-            em.clear();
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
