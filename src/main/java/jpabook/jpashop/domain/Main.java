@@ -15,15 +15,16 @@ public class Main {
         tx.begin();
 
         try {
-            Order order = new Order();
-//            order.addOrderItem(new OrderItem());
-            em.persist(order);
+            Member member = new Member();
+            member.setName("member1");
 
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
+            em.persist(member);
 
-            em.persist(orderItem);
+            Team team = new Team();
+            team.setName("teamA");
+            team.getMembers().add(member); // 애매.. 외래키는 Member 테이블에 있으므로..
 
+            em.persist(team);
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
