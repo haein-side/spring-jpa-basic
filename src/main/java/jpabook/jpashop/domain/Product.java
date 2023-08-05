@@ -5,19 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member {
+public class Product {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "MEMBER_ID")
+    @Id @GeneratedValue
     private Long id;
-    @Column(name = "USERNAME")
+
+    @Column (name = "NAME")
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "LOCKER_ID")
-    private Locker locker;
-
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "product")
     private List<MemberProduct> memberProducts = new ArrayList<>();
 
     public Long getId() {
@@ -34,14 +30,6 @@ public class Member {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Locker getLocker() {
-        return locker;
-    }
-
-    public void setLocker(Locker locker) {
-        this.locker = locker;
     }
 
     public List<MemberProduct> getMemberProducts() {
