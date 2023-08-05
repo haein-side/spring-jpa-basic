@@ -10,45 +10,19 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MEMBER_ID")
     private Long id;
-    @Column(name = "USERNAME")
+
+    @OneToMany(mappedBy = "member") // Order 테이블과 양방향 연결 for member가 무슨 order 했는지 알기 위해
+    private List<Orders> orders = new ArrayList<>();
+
+    @Column(name = "USERNAME") // @Column(name = "") Mapping할 Column의 이름을 지정.
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "LOCKER_ID")
-    private Locker locker;
+    @Column(name = "CITY")
+    private String city;
 
-    @OneToMany(mappedBy = "member")
-    private List<MemberProduct> memberProducts = new ArrayList<>();
+    @Column(name = "STREET")
+    private String street;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Locker getLocker() {
-        return locker;
-    }
-
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-    }
-
-    public List<MemberProduct> getMemberProducts() {
-        return memberProducts;
-    }
-
-    public void setMemberProducts(List<MemberProduct> memberProducts) {
-        this.memberProducts = memberProducts;
-    }
+    @Column(name = "ZIPCODE")
+    private String zipCode;
 }
