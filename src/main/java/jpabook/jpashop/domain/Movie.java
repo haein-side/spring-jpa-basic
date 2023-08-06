@@ -6,7 +6,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@DiscriminatorValue("A")
 public class Movie extends Item {
     private String director;
     private String actor;
