@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class MemberProduct {
+public class MemberProduct extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "ORDER_ID")
