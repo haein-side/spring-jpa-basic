@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
-public abstract class Item {
+public abstract class Item { // abstract : Item만 단독으로 테이블에 저장할 일이 없다
     @Id @GeneratedValue
     @Column(name = "ITEM_ID")
     private Long id;

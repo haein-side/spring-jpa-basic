@@ -16,17 +16,13 @@ public class Main {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setCreatedBy("kim");
-            member.setCreatedDate(LocalDateTime.now());
-
-            em.persist(member);
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("김영한");
+            em.persist(book);
 
             em.flush();
             em.clear();
-
-//            Item findMovie = em.find(Item.class, movie.getId());
-//            System.out.println("findMovie = " + findMovie);
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
