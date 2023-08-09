@@ -35,7 +35,8 @@ public class Main {
             System.out.println("m = " + m.getTeam().getClass()); // m = class jpabook.jpashop.domain.Team$HibernateProxy$G4LZvTx8
 
             System.out.println("============"); // 쿼리 나옴
-            m.getTeam().getName();
+            m.getTeam(); // 프록시 객체 가져옴
+            m.getTeam().getName(); // 메소드 사용
             System.out.println("============"); // 쿼리 나옴
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
