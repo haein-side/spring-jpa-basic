@@ -30,7 +30,21 @@ public class Main {
             System.out.println("findMember.id = " + findMember.getId());
             System.out.println("findMember.name = " + findMember.getName()); // 실제 Member entity 생성해서 target 변수가 객체 가짐
             System.out.println("findMember.name = " + findMember.getName()); // 프록시 객체는 처음 사용할 때 한 번만 초기화됨 (또 쿼리 날리는 것 아님)
+            System.out.println("findMember = " + findMember.getClass()); // 프록시 객체가 실제 엔티티로 바뀌는 것이 아님 - 프록시 객체를 통해서 실제 엔티티에 접근 가능
 
+
+            Member mem1 = new Member();
+            em.persist(mem1);
+            Member mem2 = new Member();
+            em.persist(mem2);
+
+            em.flush();
+            em.clear();
+
+            Member m1 = em.getReference(Member.class, mem1.getId());
+            Member m2 = em.find(Member.class, mem2.getId());
+
+            System.out.println("m1 == m2 : " + (m1.getClass() == m2.getClass())); // false
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
