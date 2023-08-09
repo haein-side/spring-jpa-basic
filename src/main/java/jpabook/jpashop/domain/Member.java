@@ -14,8 +14,8 @@ public class Member extends BaseEntity{
     @Column(name = "USERNAME") // @Column(name = "") Mapping할 Column의 이름을 지정.
     private String name;
 
-    // 지연 로딩을 세팅하면 연관된 걸 Proxy로 가져옴 -> 실제 Team 객체를 호출하기 이전엔 쿼리가 수행되지 않음
-    @ManyToOne(fetch = FetchType.LAZY) // 프록시 객체로 Team 조인 -> Member class만 DB에서 조인한다는 것
+    // 즉시 로딩 : 즉시 조인 즉, 프록시 쓴 게 아님! 둘 다 그냥 실제 Entity임
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private Team team;
 
