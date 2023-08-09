@@ -1,5 +1,7 @@
 package jpabook.jpashop.domain;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -26,13 +28,12 @@ public class Main {
 
             Member refMember = em.getReference(Member.class, member.getId());
             System.out.println("refMember = " + refMember.getClass()); // Proxy
+            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember)); // 초기화 여부 - false
 
-            // refMember를 영속성 컨텍스트의 도움을 받지 못하도록 만들면 -> 실제 Entity를 DB에서 가져오지 못하므로 "could not initialize proxy" 발생
-//            em.detach(refMember);
-//            em.close();
-            em.clear();
+            Hibernate.initialize(refMember); // 강제 초기화
 
-            System.out.println("refMember = " + refMember.getName());
+            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember)); // 초기화 여부 - true
+
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
