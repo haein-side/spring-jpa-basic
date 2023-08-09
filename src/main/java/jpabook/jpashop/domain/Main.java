@@ -44,7 +44,9 @@ public class Main {
             Member m1 = em.getReference(Member.class, mem1.getId());
             Member m2 = em.find(Member.class, mem2.getId());
 
-            System.out.println("m1 == m2 : " + (m1.getClass() == m2.getClass())); // false
+            System.out.println("m1 == m2 : " + (m1.getClass() == m2.getClass())); // false - 프록시 객체로 넘어올지 실제 객체로 넘어올지 모름
+            System.out.println("m1 == m2 : " + (m1 instanceof Member)); // true
+            System.out.println("m1 == m2 : " + (m2 instanceof Member)); // true
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
