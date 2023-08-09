@@ -16,13 +16,19 @@ public class Main {
         tx.begin();
 
         try {
-            Book book = new Book();
-            book.setName("JPA");
-            book.setAuthor("김영한");
-            em.persist(book);
+            Member member = new Member();
+            member.setName("hello");
+            
+            em.persist(member);
 
             em.flush();
             em.clear();
+
+//            Member findMember = em.find(Member.class, member.getId());
+            Member findMember = em.getReference(Member.class, member.getId()); // 프록시 객체 조회한 것 (null)
+            System.out.println("findMember = " + findMember.getClass()); // class jpabook.jpashop.domain.Member$HibernateProxy$K72bfG9W
+            System.out.println("findMember.id = " + findMember.getId());
+            System.out.println("findMember.name = " + findMember.getName()); // 실제 Member entity 생성해서 target 변수가 객체 가짐
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
