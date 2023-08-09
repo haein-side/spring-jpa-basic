@@ -24,17 +24,16 @@ public class Main {
             em.flush();
             em.clear();
 
-            Member m1 = em.find(Member.class, member.getId());
-            System.out.println("m1 = " + m1.getClass());
-
-            Member reference = em.getReference(Member.class, member.getId()); // 27라인에서 Member 객체가 영속성 컨텍스트의 1차 캐시에 이미 저장되어 있는 상태
+            Member reference = em.getReference(Member.class, member.getId());
             System.out.println("reference = " + reference.getClass());
 
-            // 둘 다 동일한 Member 나옴!
-            // m1 = class jpabook.jpashop.domain.Member
-            // reference = class jpabook.jpashop.domain.Member
+            Member m1 = em.find(Member.class, member.getId()); // 프록시는 한 번 조회가 되면 프록시 반환함
+            System.out.println("m1 = " + m1.getClass());
 
-            System.out.println("a == a : " + (m1 == reference)); // true 보장
+            System.out.println("a == a : " + (m1 == reference)); // 항상 true를 보장함!
+
+            // reference = class jpabook.jpashop.domain.Member$HibernateProxy$UZXRp4wj
+            // m1 = class jpabook.jpashop.domain.Member$HibernateProxy$UZXRp4wj
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
