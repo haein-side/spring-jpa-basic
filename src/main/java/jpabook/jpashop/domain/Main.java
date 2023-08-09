@@ -24,20 +24,20 @@ public class Main {
             em.flush();
             em.clear();
 
-            Member reference = em.getReference(Member.class, member.getId());
-            System.out.println("reference = " + reference.getClass());
+            Member refMember = em.getReference(Member.class, member.getId());
+            System.out.println("refMember = " + refMember.getClass()); // Proxy
 
-            Member m1 = em.find(Member.class, member.getId()); // 프록시는 한 번 조회가 되면 프록시 반환함
-            System.out.println("m1 = " + m1.getClass());
+            // refMember를 영속성 컨텍스트의 도움을 받지 못하도록 만들면 -> 실제 Entity를 DB에서 가져오지 못하므로 "could not initialize proxy" 발생
+//            em.detach(refMember);
+//            em.close();
+            em.clear();
 
-            System.out.println("a == a : " + (m1 == reference)); // 항상 true를 보장함!
-
-            // reference = class jpabook.jpashop.domain.Member$HibernateProxy$UZXRp4wj
-            // m1 = class jpabook.jpashop.domain.Member$HibernateProxy$UZXRp4wj
+            System.out.println("refMember = " + refMember.getName());
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
             tx.rollback();
+            e.printStackTrace();
         } finally {
             em.close();
         }
