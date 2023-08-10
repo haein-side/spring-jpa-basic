@@ -13,6 +13,7 @@ public class Parent {
 
     private String name;
 
+    // CASCADE 설정된 것까지 같이 저장 == 연쇄
     @OneToMany(mappedBy = "parent", cascade =  CascadeType.ALL)
     private List<Child> childList = new ArrayList<>();
 
