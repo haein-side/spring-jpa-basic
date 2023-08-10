@@ -16,7 +16,7 @@ public class Parent {
     // CASCADE 설정된 것까지 같이 저장 == 연쇄
     // 연관관계 매핑하는 것과는 아무런 관련 없음
     // 연관된 엔티티도 함께 영속화하는 편리함 제공해줄 뿐!
-    @OneToMany(mappedBy = "parent", cascade =  CascadeType.ALL)
+    @OneToMany(mappedBy = "parent", cascade =  CascadeType.ALL, orphanRemoval = true)
     private List<Child> childList = new ArrayList<>();
 
     // 양방향 연관관계 맺어주는 메소드 (하나의 메소드에 양측에 관계 설정)
@@ -42,5 +42,13 @@ public class Parent {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Child> getChildList() {
+        return childList;
+    }
+
+    public void setChildList(List<Child> childList) {
+        this.childList = childList;
     }
 }
