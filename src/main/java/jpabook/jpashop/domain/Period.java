@@ -1,36 +1,29 @@
 package jpabook.jpashop.domain;
 
 import javax.persistence.Embeddable;
+import java.time.LocalDateTime;
 
 @Embeddable
 public class Period {
     public Period() {
     }
-    private String city;
-    private String street;
-    private String zipcode;
 
-    public String getCity() {
-        return city;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
-    public String getStreet() {
-        return street;
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 }

@@ -18,6 +18,12 @@ public class Main {
         tx.begin();
 
         try {
+            Member member = new Member();
+            member.setName("hello");
+            member.setHomeAddress(new Address("city", "street", "001"));
+            member.setWorkPeriod(new Period());
+
+            em.persist(member);
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
