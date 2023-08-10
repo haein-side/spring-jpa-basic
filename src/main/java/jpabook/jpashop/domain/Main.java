@@ -18,25 +18,14 @@ public class Main {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("teamA");
-            em.persist(team);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            Member member = new Member();
-            member.setName("member1");
-            member.setTeam(team);
-            em.persist(member);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            em.flush();
-            em.clear();
-
-            Member m = em.find(Member.class, member.getId()); // member만 가져옴
-
-            System.out.println("m = " + m.getTeam().getClass()); // m = class jpabook.jpashop.domain.Team
-
-            System.out.println("============");
-            m.getTeam().getName();
-            System.out.println("============");
+            em.persist(parent); // 부모 저장할 때 자녀 없어도 em.persist(child1); em.persist(child2); 하는 것처럼 -> CASCADE
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
