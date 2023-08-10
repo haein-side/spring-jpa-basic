@@ -16,6 +16,7 @@ public class Address {
     private String city;
     private String street;
     private String zipcode;
+   // private Member member; // Embedded type이 Entity 가질 수 있음!
 
     public String getCity() {
         return city;
