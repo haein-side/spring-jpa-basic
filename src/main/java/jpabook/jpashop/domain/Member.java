@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 public class Member extends BaseEntity{
 
@@ -15,7 +17,7 @@ public class Member extends BaseEntity{
     private String name;
 
     // 즉시 로딩 : 즉시 조인 즉, 프록시 쓴 게 아님! 둘 다 그냥 실제 Entity임
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn
     private Team team;
 

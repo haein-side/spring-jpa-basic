@@ -16,6 +16,7 @@ public class Parent {
     // CASCADE 설정된 것까지 같이 저장 == 연쇄
     // 연관관계 매핑하는 것과는 아무런 관련 없음
     // 연관된 엔티티도 함께 영속화하는 편리함 제공해줄 뿐!
+    // 부모 저장할 때 child도 같이 저장됨!
     @OneToMany(mappedBy = "parent", cascade =  CascadeType.ALL, orphanRemoval = true)
     private List<Child> childList = new ArrayList<>();
 
