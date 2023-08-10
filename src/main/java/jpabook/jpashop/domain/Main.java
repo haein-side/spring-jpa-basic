@@ -31,7 +31,8 @@ public class Main {
             em.clear();
 
             Parent findParent = em.find(Parent.class, parent.getId());
-            findParent.getChildList().remove(0);
+//            findParent.getChildList().remove(0);
+            em.remove(findParent);
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
