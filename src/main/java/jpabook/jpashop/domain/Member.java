@@ -1,6 +1,10 @@
 package jpabook.jpashop.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Member extends BaseEntity{
@@ -17,22 +21,20 @@ public class Member extends BaseEntity{
     private Period workPeriod;
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "city", column = @Column(name = "HOME_CITY")),
-            @AttributeOverride(name = "street", column = @Column(name = "HOME_STREET")),
-            @AttributeOverride(name = "zipcode", column = @Column(name = "HOME_ZIP"))
-    })
     private Address homeAddress;
 
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOOD", joinColumns =
+        @JoinColumn(name = "MEMBER_ID")
+    )
+    @Column(name = "FOOD_NAME") // 예외적으로 컬럼 하나 이므로 명명 가능
+    private Set<String> favoriteFoods = new HashSet<>();
 
-    // 주소 Address
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "city", column = @Column(name = "COMPANY_CITY")),
-            @AttributeOverride(name = "street", column = @Column(name = "COMPANY_STREET")),
-            @AttributeOverride(name = "zipcode", column = @Column(name = "COMPANY_ZIP"))
-    })
-    private Address companyAddress;
+    @ElementCollection
+    @CollectionTable(name = "ADDRESS", joinColumns =
+        @JoinColumn(name = "MEMBER_ID") // 외래키로 맵핑함
+    )
+    private List<Address> addressHistory = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -64,5 +66,21 @@ public class Member extends BaseEntity{
 
     public void setHomeAddress(Address homeAddress) {
         this.homeAddress = homeAddress;
+    }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
+    }
+
+    public List<Address> getAddressHistory() {
+        return addressHistory;
+    }
+
+    public void setAddressHistory(List<Address> addressHistory) {
+        this.addressHistory = addressHistory;
     }
 }
