@@ -18,7 +18,7 @@ public class Main {
         tx.begin();
 
         try {
-            Member member = new Member();
+            Member member = new Member(); // 값 타입 컬렉션은 field username 처럼 lifecycle이 다 member에 의존함
             member.setName("it's me");
             member.setHomeAddress(new Address("homeCity", "street", "10000"));
 
