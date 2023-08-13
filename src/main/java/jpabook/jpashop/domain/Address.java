@@ -15,11 +15,8 @@ public class Address {
         this.zipcode = zipcode;
     }
 
-    @Column(name = "city", insertable = false, updatable = false)
     private String city;
-    @Column(name = "city", insertable = false, updatable = false)
     private String street;
-    @Column(name = "city", insertable = false, updatable = false)
     private String zipcode;
    // private Member member; // Embedded type이 Entity 가질 수 있음!
 

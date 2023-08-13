@@ -18,17 +18,17 @@ public class Main {
         tx.begin();
 
         try {
-            Address address = new Address("city", "street", "001");
+            Address address = new Address("city2", "street", "001");
 
             Member member = new Member();
-            member.setName("member1");
+            member.setName("member6");
             member.setHomeAddress(address);
             em.persist(member);
 
             Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
 
             Member member2 = new Member();
-            member2.setName("member2");
+            member2.setName("member7");
             member2.setHomeAddress(copyAddress);
             em.persist(member2);
 

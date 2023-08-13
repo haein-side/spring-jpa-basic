@@ -17,11 +17,22 @@ public class Member extends BaseEntity{
     private Period workPeriod;
 
     @Embedded
-    // 주소 Address
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "HOME_CITY")),
+            @AttributeOverride(name = "street", column = @Column(name = "HOME_STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "HOME_ZIP"))
+    })
     private Address homeAddress;
 
+
     // 주소 Address
-    private Address workAddress;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "COMPANY_CITY")),
+            @AttributeOverride(name = "street", column = @Column(name = "COMPANY_STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "COMPANY_ZIP"))
+    })
+    private Address companyAddress;
 
     public Long getId() {
         return id;
