@@ -15,8 +15,18 @@ public class Address {
         this.zipcode = zipcode;
     }
 
+    // 값 타입은 의미 있는 메소드 만들 수도 있음
+    public String fullAddress() {
+        return getCity() + " " + getStreet() + " " + getZipcode();
+    }
+
+    @Column(length = 10)
     private String city;
+
+    @Column(length = 10)
     private String street;
+
+    @Column(length = 10)
     private String zipcode;
    // private Member member; // Embedded type이 Entity 가질 수 있음!
 
