@@ -20,9 +20,11 @@ public class Member extends BaseEntity{
     @Embedded
     private Period workPeriod;
 
+    // 지연 로딩 X = select 시 불러옴
     @Embedded
     private Address homeAddress;
 
+    // 값 타입 컬렉션 : 지연 로딩 O
     @ElementCollection
     @CollectionTable(name = "FAVORITE_FOOD", joinColumns =
         @JoinColumn(name = "MEMBER_ID")
@@ -30,6 +32,7 @@ public class Member extends BaseEntity{
     @Column(name = "FOOD_NAME") // 예외적으로 컬럼 하나 이므로 명명 가능
     private Set<String> favoriteFoods = new HashSet<>();
 
+    // 값 타입 컬렉션 : 지연 로딩 O
     @ElementCollection
     @CollectionTable(name = "ADDRESS", joinColumns =
         @JoinColumn(name = "MEMBER_ID") // 외래키로 맵핑함
