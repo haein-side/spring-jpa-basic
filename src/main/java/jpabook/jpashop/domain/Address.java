@@ -20,6 +20,7 @@ public class Address {
         return getCity() + " " + getStreet() + " " + getZipcode();
     }
 
+    // validation rule을 추가해줄 수도 있음!
     @Column(length = 10)
     private String city;
 
