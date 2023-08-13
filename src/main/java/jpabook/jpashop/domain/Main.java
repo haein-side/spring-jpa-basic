@@ -25,15 +25,17 @@ public class Main {
             member.setHomeAddress(address);
             em.persist(member);
 
+            Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+
             Member member2 = new Member();
             member2.setName("member2");
-            member2.setHomeAddress(address);
+            member2.setHomeAddress(copyAddress);
             em.persist(member2);
 
             // member 하나의 Address만 바꿀 생각으로 실행
             // but update 쿼리가 두 번 나가면서 같은 엔티티를 가리키는 member, member2의
             // Address가 바뀜
-            // Address를 값 타입으로 쓰면 안 되고 엔티티로 써야 함
+            // Address를 값 타입으로 쓰면 안 되고 엔티티로 써야
             member.getHomeAddress().setCity("newCity");
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
