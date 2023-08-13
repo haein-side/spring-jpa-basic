@@ -71,7 +71,7 @@ public class Member extends BaseEntity{
         this.homeAddress = homeAddress;
     }
 
-    public Set<String> getFavoriteFoods() {
+    public Set<String> getFavoriteFoods() { // String 자체가 값타입
         return favoriteFoods;
     }
 
