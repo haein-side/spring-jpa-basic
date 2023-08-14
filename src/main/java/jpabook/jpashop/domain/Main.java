@@ -36,12 +36,15 @@ public class Main {
             // 컬렉션 값 연관 경로
             // 더이상 탐색 못함
             // 컬렉션으로 들어가기 때문에 쓸 수 있는 게 size 정도밖에 없음
-            String query = "select t.members from Team_j t";
+            //String query = "select t.members from Team_j t";
 
-            Collection result = em.createQuery(query, Collection.class)
+            // From 절에서 명시적 조인을 통해 별칭을 얻으면 별칭 통해 탐색 가능
+            String query = "select m.username from Team_j t join t.members m";
+
+            List<String> resultList = em.createQuery(query, String.class)
                     .getResultList();
 
-            for (Object s : result) {
+            for (String s : resultList) {
                 System.out.println("s = " + s);
             }
 
