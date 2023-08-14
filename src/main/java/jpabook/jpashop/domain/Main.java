@@ -26,9 +26,19 @@ public class Main {
             // 반환타입 설정 가능 -> TypeQuery
             // 기본적으로 엔티티 설정
             TypedQuery<Member_j> query = em.createQuery("select m from Member_j m", Member_j.class);
-            
+
+            List<Member_j> resultList = query.getResultList();
+
+            for (Member_j member_j : resultList) {
+                System.out.println("members = " + member_j);
+            }
+
             // 반환타입 명확하지 X -> Query
-            Query query2 = em.createQuery("select m.username, m.age from Member_j m");
+            TypedQuery<Member_j> query1 = em.createQuery("select m from Member_j m where m.id = 33", Member_j.class);
+
+            Member_j singleResult = query1.getSingleResult();
+
+            System.out.println("single member = " + singleResult);
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
