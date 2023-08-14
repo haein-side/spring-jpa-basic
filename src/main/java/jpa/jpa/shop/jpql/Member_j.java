@@ -15,6 +15,9 @@ public class Member_j {
     @JoinColumn(name = "TEAM_ID") // 외래키 매핑 : Team_j의 pk를 TEAM_ID라는 이름으로 컬럼 가짐
     private Team_j team;
 
+    @Enumerated(EnumType.STRING)
+    private MemberType_j type;
+
     public void changeTeam(Team_j team) {
         this.team = team;
         team.getMembers().add(this);
@@ -42,6 +45,14 @@ public class Member_j {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public MemberType_j getType() {
+        return type;
+    }
+
+    public void setType(MemberType_j type) {
+        this.type = type;
     }
 
     // Team 양방향 지울 것!

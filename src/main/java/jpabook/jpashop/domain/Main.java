@@ -1,15 +1,9 @@
 package jpabook.jpashop.domain;
 
-import jpa.jpa.shop.jpql.Address_j;
-import jpa.jpa.shop.jpql.MemberDTO;
-import jpa.jpa.shop.jpql.Member_j;
-import jpa.jpa.shop.jpql.Team_j;
-import org.hibernate.Hibernate;
+import jpa.jpa.shop.jpql.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,8 +20,9 @@ public class Main {
             em.persist(team);
 
             Member_j member = new Member_j();
-            member.setUsername("member1");
+            member.setUsername("teamA");
             member.setAge(10);
+            member.setType(MemberType_j.ADMIN);
 
             // 양방향 관계를 만들어주기 위한 연관관계 편의 메소드 생성
             member.changeTeam(team);
@@ -38,9 +33,11 @@ public class Main {
             em.clear();
 
             // 페이징
-            String query = "select m from Member_j m left join m.team t on t.name = 'teamA'";
+            String query = "select m from Member_j m " +
+                    "where m.type = :userType";
 
             List<Member_j> result = em.createQuery(query, Member_j.class)
+                    .setParameter("userType", jpa.jpa.shop.jpql.MemberType_j.ADMIN)
                     .getResultList();
 
             System.out.println("result.size = " + result.size());
