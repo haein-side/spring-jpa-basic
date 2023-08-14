@@ -37,4 +37,14 @@ public class Member_j {
     public void setAge(int age) {
         this.age = age;
     }
+
+    // Team 양방향 지울 것!
+    @Override
+    public String toString() {
+        return "Member_j{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

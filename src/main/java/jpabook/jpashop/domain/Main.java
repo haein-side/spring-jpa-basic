@@ -21,22 +21,27 @@ public class Main {
         tx.begin();
 
         try {
-            Member_j member = new Member_j();
-            member.setUsername("member_hi");
-            member.setAge(10);
-            em.persist(member);
+            for (int i = 0; i < 100; i++) {
+                Member_j member = new Member_j();
+                member.setUsername("member" + i);
+                member.setAge(i);
+                em.persist(member);
+            }
 
             em.flush();
             em.clear();
 
-            // 단순 값 DTO 명령어로 바로 조회하는 법
-            List<MemberDTO> resultList = em.createQuery("select new jpa.jpa.shop.jpql.MemberDTO(m.username, m.age) from Member_j m", MemberDTO.class)
+            // 페이징
+            List<Member_j> result = em.createQuery("select m from Member_j m order by m.age desc", Member_j.class)
+                    .setFirstResult(1)
+                    .setMaxResults(10)
                     .getResultList();
 
-            // MemberDTO 타입으로 조회
-            MemberDTO memberDTO = resultList.get(0);
-            System.out.println("memberDTO = " + memberDTO.getUsername());
-            System.out.println("memberDTO = " + memberDTO.getAge());
+            System.out.println("result.size = " + result.size());
+
+            for (Member_j member1 : result) {
+                System.out.println("member1 = " + member1);
+            }
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
