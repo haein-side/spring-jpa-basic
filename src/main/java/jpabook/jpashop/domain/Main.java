@@ -21,20 +21,26 @@ public class Main {
         tx.begin();
 
         try {
-            for (int i = 0; i < 100; i++) {
-                Member_j member = new Member_j();
-                member.setUsername("member" + i);
-                member.setAge(i);
-                em.persist(member);
-            }
+            Team_j team = new Team_j();
+            team.setName("teamA");
+            em.persist(team);
+
+            Member_j member = new Member_j();
+            member.setUsername("member1");
+            member.setAge(10);
+
+            // 양방향 관계를 만들어주기 위한 연관관계 편의 메소드 생성
+            member.changeTeam(team);
+
+            em.persist(member);
 
             em.flush();
             em.clear();
 
             // 페이징
-            List<Member_j> result = em.createQuery("select m from Member_j m order by m.age desc", Member_j.class)
-                    .setFirstResult(1)
-                    .setMaxResults(10)
+            String query = "select m from Member_j m left join m.team t on t.name = 'teamA'";
+
+            List<Member_j> result = em.createQuery(query, Member_j.class)
                     .getResultList();
 
             System.out.println("result.size = " + result.size());
