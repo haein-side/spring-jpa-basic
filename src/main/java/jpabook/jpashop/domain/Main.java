@@ -33,10 +33,9 @@ public class Main {
                 System.out.println("members = " + member_j);
             }
 
-            TypedQuery<Member_j> query1 = em.createQuery("select m from Member_j m where m.username = : username", Member_j.class);
-            query1.setParameter("username", "member_jpql");
-
-            List<Member_j> resultList2 = query1.getResultList();
+            List<Member_j> resultList2 = em.createQuery("select m from Member_j m where m.username = : username", Member_j.class)
+                    .setParameter("username", "member_jpql")
+                    .getResultList();
 
             for (Member_j member_j : resultList2) {
                 System.out.println("members_2 = " + member_j);
