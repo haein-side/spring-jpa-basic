@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import jpa.jpa.shop.jpql.Address_j;
 import jpa.jpa.shop.jpql.Member_j;
 import jpa.jpa.shop.jpql.Team_j;
 import org.hibernate.Hibernate;
@@ -45,6 +46,16 @@ public class Main {
             // JOIN 명시적으로 작성할 것
             List<Team_j> result3 = em.createQuery("select t from Member_j m join m.team t", Team_j.class)
                     .getResultList();
+
+            // 임베디드 타입 프로젝션
+            // 소속이 엔티티이기 때문에 어디 소속인지 꼭 정해줘야 한다 ex from Order o
+            em.createQuery("select o.address from Order_j o", Address_j.class)
+                            .getResultList();
+
+            // 스칼라 타입 프로젝션
+            // 원하는 거 다 가져오는 것
+            em.createQuery("select distinct m.username, m.age from Member_j m")
+                            .getResultList();
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
