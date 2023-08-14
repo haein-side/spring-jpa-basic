@@ -28,12 +28,11 @@ public class Main {
             em.flush();
             em.clear();
 
-            List resultList = em.createQuery("select distinct m.username, m.age from Member_j m")
+            List<Object[]> resultList = em.createQuery("select distinct m.username, m.age from Member_j m")
                     .getResultList();
 
             // Object[] 타입으로 조회
-            Object o = resultList.get(0);
-            Object[] result = (Object[]) o;
+            Object[] result = resultList.get(0);
             System.out.println("result = " + result[0]);
             System.out.println("age = " + result[1]);
 
