@@ -20,15 +20,6 @@ public class Main {
         tx.begin();
 
         try {
-            List<Member> result = em.createQuery(
-                    // 엔티티 대상 쿼리 -> 엔티티 매핑 정보 읽어서 쿼리 생성됨
-                    "select m From Member m where m.name like 'member%'",
-                    Member.class
-            ).getResultList();
-
-            for (Member member : result) {
-                System.out.println("member = " + member);
-            }
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
