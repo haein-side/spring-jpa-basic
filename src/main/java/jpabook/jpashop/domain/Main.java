@@ -1,11 +1,9 @@
 package jpabook.jpashop.domain;
 
+import jpa.jpa.shop.jpql.Member_j;
 import org.hibernate.Hibernate;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -20,15 +18,17 @@ public class Main {
         tx.begin();
 
         try {
-            List<Member> result = em.createQuery(
-                    // 엔티티 대상 쿼리 -> 엔티티 매핑 정보 읽어서 쿼리 생성됨
-                    "select m From Member m where m.name like 'member%'",
-                    Member.class
-            ).getResultList();
 
-            for (Member member : result) {
-                System.out.println("member = " + member);
-            }
+            Member_j member = new Member_j();
+            member.setUsername("member_jpql");
+            em.persist(member);
+
+            // 반환타입 설정 가능 -> TypeQuery
+            // 기본적으로 엔티티 설정
+            TypedQuery<Member_j> query = em.createQuery("select m from Member_j m", Member_j.class);
+            
+            // 반환타입 명확하지 X -> Query
+            Query query2 = em.createQuery("select m.username, m.age from Member_j m");
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
