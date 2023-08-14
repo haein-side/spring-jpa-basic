@@ -33,12 +33,14 @@ public class Main {
                 System.out.println("members = " + member_j);
             }
 
-            // 반환타입 명확하지 X -> Query
-            TypedQuery<Member_j> query1 = em.createQuery("select m from Member_j m where m.id = 33", Member_j.class);
+            TypedQuery<Member_j> query1 = em.createQuery("select m from Member_j m where m.username = : username", Member_j.class);
+            query1.setParameter("username", "member_jpql");
 
-            Member_j singleResult = query1.getSingleResult();
+            List<Member_j> resultList2 = query1.getResultList();
 
-            System.out.println("single member = " + singleResult);
+            for (Member_j member_j : resultList2) {
+                System.out.println("members_2 = " + member_j);
+            }
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
