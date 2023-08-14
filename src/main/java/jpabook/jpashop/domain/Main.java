@@ -1,14 +1,9 @@
 package jpabook.jpashop.domain;
 
-import org.hibernate.Hibernate;
+import jpa.jpa.shop.jpql.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import java.time.LocalDateTime;
+import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,6 +15,31 @@ public class Main {
         tx.begin();
 
         try {
+            Team_j team = new Team_j();
+            team.setName("teamA");
+            em.persist(team);
+
+            Member_j member = new Member_j();
+            member.setUsername("관리자");
+            member.setAge(10);
+//            member.setType(MemberType_j.ADMIN);
+
+            // 양방향 관계를 만들어주기 위한 연관관계 편의 메소드 생성
+            member.changeTeam(team);
+
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            String query = "select nullif(m.username, '관리자') from Member_j m";
+
+            List<String> result = em.createQuery(query, String.class)
+                    .getResultList();
+
+            for (String s : result) {
+                System.out.println("s = " + s);
+            }
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
