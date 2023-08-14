@@ -32,7 +32,9 @@ public class Main {
             em.flush();
             em.clear();
 
-            String query = "select nullif(m.username, '관리자') from Member_j m";
+            // String query = "select function('group_concat', m.username) from Member_j m";
+            // 하이버네이트 사용 시 가능!
+            String query = "select group_concat(m.username) from Member_j m";
 
             List<String> result = em.createQuery(query, String.class)
                     .getResultList();
