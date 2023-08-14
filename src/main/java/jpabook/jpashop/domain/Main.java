@@ -3,6 +3,7 @@ package jpabook.jpashop.domain;
 import jpa.jpa.shop.jpql.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 public class Main {
@@ -32,14 +33,15 @@ public class Main {
             em.flush();
             em.clear();
 
-            // 단일값 연관 경로 - 추가 탐색 가능
-            // 묵시적 내부 조인 발생 (inner join)
-            String query = "select m.team from Member_j m";
+            // 컬렉션 값 연관 경로
+            // 더이상 탐색 못함
+            // 컬렉션으로 들어가기 때문에 쓸 수 있는 게 size 정도밖에 없음
+            String query = "select t.members from Team_j t";
 
-            List<Team_j> result = em.createQuery(query, Team_j.class)
+            Collection result = em.createQuery(query, Collection.class)
                     .getResultList();
 
-            for (Team_j s : result) {
+            for (Object s : result) {
                 System.out.println("s = " + s);
             }
 
