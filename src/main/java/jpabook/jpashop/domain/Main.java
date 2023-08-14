@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain;
 
 import jpa.jpa.shop.jpql.Address_j;
+import jpa.jpa.shop.jpql.MemberDTO;
 import jpa.jpa.shop.jpql.Member_j;
 import jpa.jpa.shop.jpql.Team_j;
 import org.hibernate.Hibernate;
@@ -28,13 +29,14 @@ public class Main {
             em.flush();
             em.clear();
 
-            List<Object[]> resultList = em.createQuery("select distinct m.username, m.age from Member_j m")
+            // 단순 값 DTO 명령어로 바로 조회하는 법
+            List<MemberDTO> resultList = em.createQuery("select new jpa.jpa.shop.jpql.MemberDTO(m.username, m.age) from Member_j m", MemberDTO.class)
                     .getResultList();
 
-            // Object[] 타입으로 조회
-            Object[] result = resultList.get(0);
-            System.out.println("result = " + result[0]);
-            System.out.println("age = " + result[1]);
+            // MemberDTO 타입으로 조회
+            MemberDTO memberDTO = resultList.get(0);
+            System.out.println("memberDTO = " + memberDTO.getUsername());
+            System.out.println("memberDTO = " + memberDTO.getAge());
 
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
