@@ -32,6 +32,21 @@ public class Main {
             em.flush();
             em.clear();
 
+            String query =
+                    "select " +
+                            "case when m.age <= 10 then '학생요금' " +
+                            "     when m.age >= 60 then '경로요금' " +
+                            "     else '일반요금' " +
+                            "end " +
+                    "from Member_j m";
+
+            List<String> result = em.createQuery(query, String.class)
+                    .getResultList();
+
+            for (String s : result) {
+                System.out.println("s = " + s);
+            }
+
             tx.commit(); // 엔티티가 변경되었는지 JPA가 트랜잭션 커밋하는 시점에 체크하고 쿼리 날림
         } catch (Exception e) {
             tx.rollback();
