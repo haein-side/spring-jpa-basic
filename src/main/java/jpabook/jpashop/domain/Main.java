@@ -32,14 +32,14 @@ public class Main {
             em.flush();
             em.clear();
 
-            // String query = "select function('group_concat', m.username) from Member_j m";
-            // 하이버네이트 사용 시 가능!
-            String query = "select group_concat(m.username) from Member_j m";
+            // 단일값 연관 경로 - 추가 탐색 가능
+            // 묵시적 내부 조인 발생 (inner join)
+            String query = "select m.team from Member_j m";
 
-            List<String> result = em.createQuery(query, String.class)
+            List<Team_j> result = em.createQuery(query, Team_j.class)
                     .getResultList();
 
-            for (String s : result) {
+            for (Team_j s : result) {
                 System.out.println("s = " + s);
             }
 
